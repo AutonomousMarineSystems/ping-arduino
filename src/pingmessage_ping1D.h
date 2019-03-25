@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <cstring>
 #include "pingmessage.h"
 
 class ping_msg_ping1D_ack : public PingMessage

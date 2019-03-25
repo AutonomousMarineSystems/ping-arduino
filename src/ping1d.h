@@ -11,11 +11,14 @@
 
 #pragma once
 
-#include <Arduino.h>
-#include <Stream.h>
+
+#include <stdint.h>
+#include <cstring>
+
 #include "pingmessage.h"
 #include "ping_parser.h"
 
+#include "stream.h"
 class Ping1D
 {
 public:
@@ -25,7 +28,7 @@ public:
      *
      *  @param ser: The device I/O
      */
-    Ping1D(Stream& ser);
+    Ping1D(ams::Stream& ser);
 
     /**
      * @brief Destructor
@@ -274,7 +277,7 @@ public:
 
 private:
     // Device I/O
-    Stream& _stream;
+    ams::Stream& _stream;
 
     // For decoding PingMessages from the device
     PingParser _parser;

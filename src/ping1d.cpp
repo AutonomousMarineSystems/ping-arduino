@@ -9,10 +9,11 @@
 *
 */
 
+#include <chrono>
 #include "ping1d.h"
 #include "pingmessage_all.h"
 
-Ping1D::Ping1D(Stream& ser) : _stream ( ser ) {}
+Ping1D::Ping1D(ams::Stream& ser) : _stream ( ser ) {}
 
 Ping1D::~Ping1D()
 {
@@ -64,8 +65,17 @@ bool Ping1D::initialize(uint16_t ping_interval_ms)
 
 PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
 {
-    uint32_t tstart = millis();
-    while (millis() < tstart + timeout_ms) {
+
+    auto start = std::chrono::system_clock::now();
+    std::chrono::duration<double> timeout = std::chrono::milliseconds(timeout_ms);
+    std::chrono::duration<double> elapsed_seconds;
+    while (elapsed_seconds < timeout) {
+
+      auto now = std::chrono::system_clock::now();
+
+      elapsed_seconds = now - start;
+
+
 
         PingMessage* pmsg = read();
 
