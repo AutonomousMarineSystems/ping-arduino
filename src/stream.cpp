@@ -5,7 +5,7 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 
-ams::Stream::Stream(const std::string& port) {
+Stream::Stream(const std::string& port) {
 
   // TODO Make some of this configurable.
 
@@ -29,11 +29,11 @@ ams::Stream::Stream(const std::string& port) {
     tcsetattr(fd_, TCSANOW, & settings);
   }
 }
-const bool ams::Stream::is_open(){
+const bool Stream::is_open(){
   return fd_ != -1;
 }
 
-int ams::Stream::available() {
+int Stream::available() {
 
   int bytes_available;
   ioctl(fd_, FIONREAD, &bytes_available);
@@ -41,13 +41,13 @@ int ams::Stream::available() {
   return bytes_available;
 }
 
-char ams::Stream::read() {
+char Stream::read() {
   char c;
   ::read(fd_, &c, 1);
   return c;
 }
 
-ssize_t ams::Stream::write(uint8_t* data, uint16_t count) {
+ssize_t Stream::write(uint8_t* data, uint16_t count) {
   ssize_t res = ::write(fd_, data, count);
   return res;
 }

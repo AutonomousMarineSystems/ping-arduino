@@ -13,7 +13,7 @@
 #include "ping1d.h"
 #include "pingmessage_all.h"
 
-Ping1D::Ping1D(ams::Stream& ser) : _stream ( ser ) {}
+Ping1D::Ping1D(Stream& ser) : _stream ( ser ) {}
 
 Ping1D::~Ping1D()
 {

@@ -6,8 +6,6 @@
 #include <stdint.h>
 #include <string>
 
-namespace ams {
-
 class Stream {
  public:
   Stream( const std::string& port);
@@ -20,5 +18,3 @@ class Stream {
  private:
   int fd_;
 };
-
-}  // end of namespace ams

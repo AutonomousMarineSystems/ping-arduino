@@ -28,7 +28,7 @@ public:
      *
      *  @param ser: The device I/O
      */
-    Ping1D(ams::Stream& ser);
+    Ping1D(Stream& ser);
 
     /**
      * @brief Destructor
@@ -277,7 +277,7 @@ public:
 
 private:
     // Device I/O
-    ams::Stream& _stream;
+    Stream& _stream;
 
     // For decoding PingMessages from the device
     PingParser _parser;

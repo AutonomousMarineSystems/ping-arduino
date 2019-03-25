@@ -23,7 +23,7 @@
 
 int main()  {
   const std::string port = "/dev/ttyUSB1";
-  ams::Stream stream(port);
+  Stream stream(port);
 
   if (!stream.is_open()) {
     std::cout << "Failed to connect to device." << std::endl;
