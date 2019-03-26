@@ -22,7 +22,7 @@
 #include "stream.h"
 
 int main()  {
-  const std::string port = "/dev/ttyUSB1";
+  const std::string port = "/dev/ttyUSB0";
   Stream stream(port);
 
   if (!stream.is_open()) {
