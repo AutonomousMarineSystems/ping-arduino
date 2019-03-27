@@ -7,12 +7,9 @@
 
 Stream::Stream(const std::string& port) {
 
-  // TODO Make some of this configurable.
-
   fd_ = ::open(
       port.c_str(),
       O_RDWR |
-      O_NOCTTY |
       O_NDELAY |
       O_NONBLOCK);
 
@@ -23,9 +20,24 @@ Stream::Stream(const std::string& port) {
 
     struct termios settings;
 
-    tcgetattr(fd_, &settings);
-    cfsetospeed(&settings, B115200);
-    cfsetispeed(&settings, B115200);
+    cfsetspeed(&settings, B115200);
+
+    /* Setting other Port Stuff */
+    settings.c_cflag     &=  ~PARENB;        // Make 8n1
+    settings.c_cflag     &=  ~CSTOPB;
+    settings.c_cflag     &=  ~CSIZE;
+    settings.c_cflag     |=  CS8;
+    settings.c_cflag     &=  ~CRTSCTS;       // no flow control
+    settings.c_lflag     =   0;          // no signaling chars, no echo, no canonical processing
+    settings.c_oflag     =   0;                  // no remapping, no delays
+    settings.c_cc[VMIN]      =   0;                  // read doesn't block
+    settings.c_cc[VTIME]     =   5;                  // 0.5 seconds read timeout
+
+    settings.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
+    settings.c_iflag     &=  ~(IXON | IXOFF | IXANY);// turn off s/w flow ctrl
+    settings.c_lflag     &=  ~(ICANON | ECHO | ECHOE | ISIG); // make raw
+    settings.c_oflag     &=  ~OPOST;
+
     tcsetattr(fd_, TCSANOW, & settings);
   }
 }
